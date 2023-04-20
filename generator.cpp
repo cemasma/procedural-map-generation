@@ -1,5 +1,5 @@
 #include "generator.h"
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
 
 bool labyrintProgress(wallRecordsMap wallRecords, int row, int col, int total) {
     return (
@@ -496,4 +496,27 @@ void prepareRoomSpaces(roomVector rooms, spacesMap *spaces) {
             (*spaces)[ztKey][~chosenPassage.direction] = true;
         }
     }
+}
+
+spacesMap generateMap(int row, int col) {
+    srand(time(0));
+
+    roomVector rooms = getRooms(row, col);
+    std::vector<POINT> remainedPoints = getRemainedPoints(row, col, rooms);
+    std::map<std::string, bool> remainedPointsMap = prepareRemainedPointsMap(remainedPoints);
+
+    elementVector map;
+    std::map<std::string, std::vector<std::string>> wallRecords;
+    while (labyrintProgress(wallRecords, row, col, remainedPoints.size() - 1) == false) {
+        for (int i = 0; i < remainedPoints.size(); i++) {
+            createRoads(remainedPoints.at(i).x, remainedPoints.at(i).y, row, col, &wallRecords, &map, remainedPointsMap);
+        }
+        printf("a cycle has been completed!\n");
+    }
+
+    spacesMap spaces;
+    prepareMazeSpaces(map, &spaces);
+    prepareRoomSpaces(rooms, &spaces);
+
+    return spaces;
 }

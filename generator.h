@@ -63,5 +63,6 @@ std::vector<POINT> getRemainedPoints(int row, int col, roomVector rooms);
 std::map<std::string, bool> prepareRemainedPointsMap(std::vector<POINT> remainedPoints);
 void prepareMazeSpaces(elementVector elements, spacesMap *spaces);
 void prepareRoomSpaces(roomVector rooms, spacesMap *spaces);
+spacesMap generateMap(int row, int col);
 
 #endif

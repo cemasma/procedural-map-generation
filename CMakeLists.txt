@@ -11,11 +11,13 @@ set(MY_HEADER_FILES
 	# Example : 
 	# ../common/shader.hpp
 	generator.h
+	graphic.h
 )
 
 set(MY_SOURCE_FILES
 	# put all your .c/.cpp here.
 	generator.cpp
+	graphic.cpp
 	main.cpp
 	# ../common/shader.cpp
 )
